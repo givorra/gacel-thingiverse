@@ -14,7 +14,7 @@ import {
 export const link = createHttpLink({
     uri: "http://localhost:4000/graphql",
     headers: {
-        authorization: localStorage.getItem('token'),
+        Authorization: localStorage.getItem("token"),
     },
 });
 

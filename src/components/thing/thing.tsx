@@ -32,7 +32,7 @@ function showMessage(loading: boolean, error: ApolloError | undefined, data: any
     return (<p></p>);
 }
 
-function Thing(): JSX.Element{
+function Thing(): JSX.Element {
 
     const {loading, error, data} = useQuery<GetThingByIdData, GetThingByIdVars>(
         GET_THING_BY_ID,
