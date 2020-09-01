@@ -1,10 +1,10 @@
 import {Component} from "react";
 import * as React from "react";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import Thing from "./thing/thing";
-import Login from "./login/login";
-import LoginCallback from "./login-callback/login-callback";
 import Home from "./home/Home";
+import Login from "./login/Login";
+import Thing from "./thing/Thing";
+import LoginCallback from "./login-callback/LoginCallback";
 
 export default class RouteViewPaths extends Component {
     render() {

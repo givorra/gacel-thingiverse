@@ -1,7 +1,7 @@
 import {useQuery, gql, ApolloError} from '@apollo/client';
 import React from "react";
 import logo from "../../logo.svg";
-import {GetThingByIdData, GetThingByIdVars} from "./Interfaces";
+import {GetThingByIdData, GetThingByIdVars} from "./interfaces";
 
 const GET_THING_BY_ID = gql`
     query FindThingById($id: ID!) {

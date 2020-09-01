@@ -1,4 +1,4 @@
-import {Thing} from "../thing/Interfaces";
+import {Thing} from "../thing/interfaces";
 
 export interface ThingCollectionState {
     things: Thing[];

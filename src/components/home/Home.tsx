@@ -1,7 +1,7 @@
 import * as React from "react";
 import {ThingCollection} from "../thing-collection/ThingCollection";
 import {gql, useQuery} from "@apollo/client";
-import {PopularThingsData, PopularThingsVars} from "../thing-collection/Interfaces";
+import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
 
 const POPULAR_THINGS = gql`

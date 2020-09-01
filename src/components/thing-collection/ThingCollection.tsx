@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ThingCollectionProps, ThingCollectionState} from "./Interfaces";
+import {ThingCollectionProps, ThingCollectionState} from "./interfaces";
 import Card from "react-bootstrap/Card";
 import CardGroup from 'react-bootstrap/CardGroup'
 import Row from "react-bootstrap/Row";
