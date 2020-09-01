@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useLocation} from "react-router";
+import {Redirect, useLocation} from "react-router";
 import {Thingiverse} from "../login/config";
 import {gql, useQuery} from "@apollo/client";
 
@@ -33,7 +33,7 @@ function LoginCallback(): JSX.Element {
     if (loading) return (<p>Loading...</p>)
     else {
         if (data && data.getAccessToken) localStorage.setItem("token", data.getAccessToken);
-        return (<p>Data = {data?.getAccessToken}</p>)
+        return (<Redirect to={'/home'}></Redirect>)
     }
 }
 
