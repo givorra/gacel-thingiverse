@@ -1,22 +1,22 @@
 import * as React from "react";
-import {Thingiverse} from "./config";
-
-const clientID = "ae78d6c71cf7f968065f";
-const redirectURI = "http://localhost:3000/oaut_callback";
-const scope = "code";
+import {useQuery} from "@apollo/client";
+import {AUTHENTICATION_REDIRECT_URI} from "../../graphql/queries";
+import {AthenticationRedirectUrlData} from "./interfaces";
 
 function Login(): JSX.Element {
-    const qParams = [
-        `redirect_uri=${Thingiverse.REDIRECT_URI}`,
-        `response_type=${Thingiverse.RESPONSE_TYPE}`,
-        `client_id=${Thingiverse.CLIENT_ID}`,
-    ].join("&");
+    const {loading, error, data} = useQuery<AthenticationRedirectUrlData>(AUTHENTICATION_REDIRECT_URI);
 
-    return (
-        <div>
-            <a href={`https://www.thingiverse.com/login/oauth/authorize?${qParams}`}>Login with Thingiverse guy!</a>
-        </div>
-    )
+    if (loading) {
+        return (<p>Loading...</p>);
+    } else if (error) {
+        return (<p>Error [{JSON.stringify(error)}]</p>);
+    } else {
+        return (
+            <div>
+                <a href={data?.authenticationRedirectUrl}>Login with Thingiverse guy!</a>
+            </div>
+        );
+    }
 }
 
 export default Login;

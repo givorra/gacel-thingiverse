@@ -2,31 +2,13 @@ import React from 'react';
 import './App.css';
 import {AppContainer} from "react-hot-loader";
 import RouteViewPaths from "./components/route-views-path";
-
-import {
-    ApolloClient,
-    createHttpLink,
-    InMemoryCache,
-    ApolloProvider
-} from "@apollo/client";
-
-
-export const link = createHttpLink({
-    uri: "http://localhost:4000/graphql",
-    headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-});
-
-export const client = new ApolloClient({
-    cache: new InMemoryCache(),
-    link,
-});
+import {ApolloProvider} from "@apollo/client";
+import {apolloClient} from "./graphql/client";
 
 
 function App() {
     return (
-        <ApolloProvider client={client}>
+        <ApolloProvider client={apolloClient}>
             <AppContainer>
                 <RouteViewPaths/>
             </AppContainer>

@@ -16,7 +16,7 @@ const POPULAR_THINGS = gql`
         preview_image
     }
   }
-`
+`;
 
 interface HomeState {
 
