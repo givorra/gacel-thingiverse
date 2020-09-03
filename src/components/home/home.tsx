@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ThingCollection} from "../thing-collection/ThingCollection";
+import {ThingCollection} from "../thing-collection/thing-collection";
 import {gql, useQuery} from "@apollo/client";
 import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
