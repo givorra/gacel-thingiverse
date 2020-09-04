@@ -2,8 +2,6 @@ import * as React from "react";
 import {Redirect, useLocation} from "react-router";
 import {gql, useQuery} from "@apollo/client";
 
-const url = "https://www.thingiverse.com/login/oauth/access_token";
-
 interface GetAccessTokenVars {
     code: string;
 }
@@ -28,8 +26,8 @@ function LoginCallback(): JSX.Element {
         {variables: {code: code}}
     );
 
-
-    if (loading) return (<p>Loading...</p>)
+    if (loading) return (<p>Loading...</p>);
+    else if (error) return (<p>{JSON.stringify(error)}</p>);
     else {
         if (data && data.getAccessToken) localStorage.setItem("token", data.getAccessToken);
         return (<Redirect to={'/home'}/>)

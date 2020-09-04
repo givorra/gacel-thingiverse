@@ -3,6 +3,7 @@ import {ThingCollection} from "../thing-collection/thing-collection";
 import {gql, useQuery} from "@apollo/client";
 import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
+import NavBar from "../nav-bar/nav-bar";
 
 const POPULAR_THINGS = gql`
     query PopularThings($page: Int!, $per_page: Int!) {
@@ -26,6 +27,10 @@ interface HomeProps {
 
 }
 
+const searchThing = (query: string): void => {
+    console.log(`query = ${query}`)
+};
+
 function Home() {
     const {loading, error, data} = useQuery<PopularThingsData, PopularThingsVars>(
         POPULAR_THINGS,
@@ -38,8 +43,15 @@ function Home() {
         return (<p>Error [{JSON.stringify(error)}]</p>);
     } else {
         return (
-                <ThingCollection things={data?.popularThings || []}/>
-            );
+                <Container fluid>
+                    <header>
+                        <NavBar onEnterKeyDown={searchThing}/>
+                    </header>
+                    <section>
+                        <ThingCollection things={data?.popularThings || []}/>
+                    </section>
+                </Container>
+        );
     }
 }
 

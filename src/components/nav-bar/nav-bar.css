@@ -1,0 +1,40 @@
+.nav-bar {
+    background: #248bfb;
+    color: #ffffff !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.nav-bar-title {
+    font-size: 22px;
+}
+
+.nav-bar-item {
+    height: 50px;
+}
+
+.search-control {
+    background-color: #0063ce;
+    border-width: 0;
+}
+
+.search-control:focus {
+    background-color: #0063ce;
+    border-width: 0;
+}
+
+.search-control::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #ffffff;
+    opacity: 1; /* Firefox */
+    font-size: 14px;
+}
+
+.search-control:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: #ffffff;
+    font-size: 14px
+}
+
+.search-control::-ms-input-placeholder { /* Microsoft Edge */
+    color: #ffffff;
+    font-size: 14px
+}
