@@ -9,10 +9,12 @@ export interface ThingCollectionProps {
 }
 
 export interface PopularThingsData {
-    popularThings: Thing[];
+    searchThings: Thing[];
 }
 
 export interface PopularThingsVars {
     page: number;
     per_page: number;
+    sort: string;
+    query?: string;
 }

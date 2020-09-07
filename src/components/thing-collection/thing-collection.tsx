@@ -17,8 +17,8 @@ export class ThingCollection extends React.Component<ThingCollectionProps, Thing
     render(): JSX.Element {
         return (
             <Row className="bg-light">
-                {this.state.things.map(thing => (
-                    <Col xs={12} md={6} lg={4} xl={3} className="p-2">
+                {this.state.things.map((thing, index) => (
+                    <Col xs={12} md={6} lg={4} xl={3} className="p-2" key={index}>
                         <Card className="m-2 h-100 mx-auto">
                             <Card.Header className="text-truncate">{thing.name}</Card.Header>
                             <Card.Img className="" variant="top" src={thing.preview_image}/>
