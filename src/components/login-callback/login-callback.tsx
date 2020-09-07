@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Redirect, useLocation} from "react-router";
-import {gql, useQuery} from "@apollo/client";
+import {useQuery} from "@apollo/client";
+import {GQL_GET_ACCESS_TOKEN} from "../../graphql/queries";
 
 interface GetAccessTokenVars {
     code: string;
@@ -10,19 +11,13 @@ interface GetAccessTokenData {
     getAccessToken: string;
 }
 
-const GET_ACCESS_TOKEN = gql`
-    query getAccessToken($code: String!) {
-        getAccessToken(code: $code)
-    }
-`
-
 function LoginCallback(): JSX.Element {
     const state = new URLSearchParams(useLocation().search);
     const code = state.get("code") ? String(state.get("code")) : '';
     console.log("Code = " + code);
 
     const {loading, error, data} = useQuery<GetAccessTokenData, GetAccessTokenVars>(
-        GET_ACCESS_TOKEN,
+        GQL_GET_ACCESS_TOKEN,
         {variables: {code: code}}
     );
 

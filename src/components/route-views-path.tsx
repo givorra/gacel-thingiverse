@@ -1,5 +1,5 @@
-import {Component} from "react";
 import * as React from "react";
+import {Component} from "react";
 import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
 import Home from "./home/home";
 import Login from "./login/login";

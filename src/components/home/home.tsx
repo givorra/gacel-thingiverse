@@ -1,56 +1,44 @@
 import * as React from "react";
+import {useState} from "react";
 import {ThingCollection} from "../thing-collection/thing-collection";
-import {gql, useQuery, WatchQueryFetchPolicy} from "@apollo/client";
+import {useQuery} from "@apollo/client";
 import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
 import NavBar from "../nav-bar/nav-bar";
 import HomeFilterBar from "../home-filter-bar/home-filter-bar";
-import {useState} from "react";
+import {FETCH_POLICY, POPULAR_FILTER, RELEVANT_FILTER, SORT_FILTERS, THINGS_PER_PAGE} from "./consts";
+import {GQL_SEARCH_THINGS} from "../../graphql/queries";
 
-const POPULAR_THINGS = gql`
-    query search($page: Int!, $per_page: Int!, $sort: String!, $query: String) {
-    searchThings(page: $page, per_page: $per_page, sort: $sort, query: $query) {
-        id
-        name
-        public_url
-        like_count
-        is_liked
-        comment_count
-        preview_image
-    }
-  }
-`;
-
-const thingsPerPage: number = 10;
-const fetchPolicy: WatchQueryFetchPolicy = "no-cache";
 
 function Home() {
     const [searchQuery, setSearchQuery] = useState<string>();
-    const [searchSort, setSearchSort] = useState<string>("popular");
+    const [searchSortIndex, setSearchSort] = useState<number>(SORT_FILTERS.indexOf(POPULAR_FILTER));
     const [page, setPage] = useState<number>(1);
 
     const onChangeSearchQuery = (query: string) => {
         console.log("Query new value " + query);
+        console.log("Index of filter " + SORT_FILTERS.indexOf(RELEVANT_FILTER));
+        setSearchSort(SORT_FILTERS.indexOf(RELEVANT_FILTER));
         setSearchQuery(query);
     };
 
-    const onChangeSort = (sort: string) => {
+    const onChangeSort = (sort: number) => {
         console.log("Sort New Value " + sort);
         setSearchSort(sort);
     };
 
     // FIXME [apollo client bug]: useQuery don't return data when query is cached. Workaround -> fetchPolicy: "no-cache"
     const {loading, error, data} = useQuery<PopularThingsData, PopularThingsVars>(
-        POPULAR_THINGS,
+        GQL_SEARCH_THINGS,
         {
             variables:
                 {
-                    per_page: thingsPerPage,
+                    per_page: THINGS_PER_PAGE,
                     page: page,
                     query: searchQuery,
-                    sort: searchSort
+                    sort: SORT_FILTERS[searchSortIndex].value
                 },
-            fetchPolicy: fetchPolicy
+            fetchPolicy: FETCH_POLICY
         }
     );
 
@@ -60,7 +48,8 @@ function Home() {
                 <NavBar onEnterKeyDown={onChangeSearchQuery}/>
             </header>
             <section>
-                <HomeFilterBar onChangeSort={onChangeSort}/>
+                <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS}
+                               sortFilterSelectedIndex={searchSortIndex}/>
             </section>
             {
                 (loading) ? <p>Loading things...</p> :

@@ -2,17 +2,14 @@ import * as React from "react";
 import Row from "react-bootstrap/Row";
 import FormControl from "react-bootstrap/FormControl";
 import Col from "react-bootstrap/Col";
+import {SortFilter} from "../home/interfaces";
 
-const sortFilters: string[] = [
-    "Popular",
-    "Newest",
-    "Relevant",
-    "Text",
-    "Makes"
-];
 
 interface HomeFilterBarProps {
-    onChangeSort(sort: string): void
+    onChangeSort(sort: number): void,
+
+    sortFilters: SortFilter[],
+    sortFilterSelectedIndex: number
 }
 
 function HomeFilterBar(props: HomeFilterBarProps) {
@@ -24,8 +21,9 @@ function HomeFilterBar(props: HomeFilterBarProps) {
         <Row className="bg-light">
             <Col xs={12} md={6} lg={4} xl={3} className="p-2">
                 <FormControl as="select" custom onChange={onSelectChange}>
-                    {sortFilters.map(((value, index) => {
-                        return (<option defaultChecked={index === 0} key={index} value={value.toLowerCase()}>{value}</option>);
+                    {props.sortFilters.map(((sortFilter, index) => {
+                        return (<option selected={index === props.sortFilterSelectedIndex} key={index}
+                                        value={index}>{sortFilter.text}</option>);
                     }))
                     }
                 </FormControl>

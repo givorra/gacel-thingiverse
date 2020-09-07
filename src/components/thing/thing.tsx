@@ -1,21 +1,8 @@
-import {useQuery, gql, ApolloError} from '@apollo/client';
+import {ApolloError, useQuery} from '@apollo/client';
 import React from "react";
 import logo from "../../logo.svg";
 import {GetThingByIdData, GetThingByIdVars} from "./interfaces";
-
-const GET_THING_BY_ID = gql`
-    query FindThingById($id: ID!) {
-    getThingById(id: $id) {
-        id
-        name
-        public_url
-        like_count
-        is_liked
-        comment_count
-        preview_image
-    }
-  }
-`
+import {GQL_GET_THING_BY_ID} from "../../graphql/queries";
 
 function showMessage(loading: boolean, error: ApolloError | undefined, data: any): JSX.Element {
     if (loading)
@@ -40,7 +27,7 @@ function showMessage(loading: boolean, error: ApolloError | undefined, data: any
 function Thing(): JSX.Element {
 
     const {loading, error, data} = useQuery<GetThingByIdData, GetThingByIdVars>(
-        GET_THING_BY_ID,
+        GQL_GET_THING_BY_ID,
         {variables: {id: 1762299}}
     );
 

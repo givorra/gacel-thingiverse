@@ -1,10 +1,10 @@
 import * as React from "react";
 import {useQuery} from "@apollo/client";
-import {AUTHENTICATION_REDIRECT_URI} from "../../graphql/queries";
+import {GQL_AUTHENTICATION_REDIRECT_URI} from "../../graphql/queries";
 import {AthenticationRedirectUrlData} from "./interfaces";
 
 function Login(): JSX.Element {
-    const {loading, error, data} = useQuery<AthenticationRedirectUrlData>(AUTHENTICATION_REDIRECT_URI);
+    const {loading, error, data} = useQuery<AthenticationRedirectUrlData>(GQL_AUTHENTICATION_REDIRECT_URI);
 
     if (loading) {
         return (<p>Loading...</p>);
