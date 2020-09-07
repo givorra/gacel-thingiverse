@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ThingCollection} from "../thing-collection/thing-collection";
-import {gql, useQuery} from "@apollo/client";
+import {gql, useQuery, WatchQueryFetchPolicy} from "@apollo/client";
 import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
 import NavBar from "../nav-bar/nav-bar";
@@ -8,8 +8,8 @@ import HomeFilterBar from "../home-filter-bar/home-filter-bar";
 import {useState} from "react";
 
 const POPULAR_THINGS = gql`
-    query search($page: Int!, $per_page: Int!, $sort: String!) {
-    searchThings(page: $page, per_page: $per_page, sort: $sort) {
+    query search($page: Int!, $per_page: Int!, $sort: String!, $query: String) {
+    searchThings(page: $page, per_page: $per_page, sort: $sort, query: $query) {
         id
         name
         public_url
@@ -21,47 +21,37 @@ const POPULAR_THINGS = gql`
   }
 `;
 
-interface HomeState {
-
-}
-
-interface HomeProps {
-
-}
-
-const initialState: PopularThingsVars = {
-    page: 1,
-    per_page: 10,
-    sort: "popular",
-    query: ""
-};
+const thingsPerPage: number = 10;
+const fetchPolicy: WatchQueryFetchPolicy = "no-cache";
 
 function Home() {
-    const [searchThingsVars, setSearchThingsVars] = useState<PopularThingsVars>(initialState);
+    const [searchQuery, setSearchQuery] = useState<string>();
+    const [searchSort, setSearchSort] = useState<string>("popular");
+    const [page, setPage] = useState<number>(1);
 
     const onChangeSearchQuery = (query: string) => {
         console.log("Query new value " + query);
-        setSearchThingsVars({
-            page: searchThingsVars.page,
-            per_page: searchThingsVars.per_page,
-            sort: searchThingsVars.sort,
-            query: query
-        });
+        setSearchQuery(query);
     };
 
     const onChangeSort = (sort: string) => {
         console.log("Sort New Value " + sort);
-        setSearchThingsVars({
-            page: searchThingsVars.page,
-            per_page: searchThingsVars.per_page,
-            sort: sort,
-            query: searchThingsVars.query
-        });
+        setSearchSort(sort);
     };
 
+    // FIXME [apollo client bug]: useQuery don't return data when query is cached. Workaround -> fetchPolicy: "no-cache"
     const {loading, error, data} = useQuery<PopularThingsData, PopularThingsVars>(
         POPULAR_THINGS,
-        {variables: searchThingsVars, fetchPolicy: "no-cache"}
+        {
+            variables:
+                {
+                    per_page: thingsPerPage,
+                    page: page,
+                    query: searchQuery,
+                    sort: searchSort
+                },
+            fetchPolicy: fetchPolicy
+        }
     );
 
     return (
