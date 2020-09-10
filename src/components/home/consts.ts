@@ -15,5 +15,5 @@ export const SORT_FILTERS: SortFilter[] = [
     MAKES_FILTER,
 ];
 
-export const THINGS_PER_PAGE: number = 10;
+export const THINGS_PER_PAGE: number = 16;
 export const FETCH_POLICY: WatchQueryFetchPolicy = "no-cache";

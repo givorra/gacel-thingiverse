@@ -8,6 +8,7 @@ import NavBar from "../nav-bar/nav-bar";
 import HomeFilterBar from "../home-filter-bar/home-filter-bar";
 import {FETCH_POLICY, POPULAR_FILTER, RELEVANT_FILTER, SORT_FILTERS, THINGS_PER_PAGE} from "./consts";
 import {GQL_SEARCH_THINGS} from "../../graphql/queries";
+import Pagination from "../pagination/pagination";
 
 
 function Home() {
@@ -33,7 +34,8 @@ function Home() {
         isFeatured ? setFeatured(isFeatured) : setFeatured(undefined);
     };
 
-    // FIXME [apollo client bug]: useQuery don't return data when query is cached. Workaround -> fetchPolicy: "no-cache"
+    // FIXME [react-apollo issue -> https://github.com/apollographql/react-apollo/issues/3816]: useQuery don't return data when query is cached.
+    //  Workaround -> fetchPolicy: "no-cache"
     const {loading, error, data} = useQuery<PopularThingsData, PopularThingsVars>(
         GQL_SEARCH_THINGS,
         {
@@ -63,9 +65,10 @@ function Home() {
                     (error) ? <p>Error [{JSON.stringify(error)}]</p> :
                         <section>
                             <ThingCollection things={data?.searchThings || []}/>
+                            <Pagination/>
                         </section>
-            }
 
+            }
         </Container>
     );
 }
