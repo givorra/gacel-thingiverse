@@ -6,7 +6,14 @@ import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfac
 import Container from "react-bootstrap/Container";
 import NavBar from "../nav-bar/nav-bar";
 import HomeFilterBar from "../home-filter-bar/home-filter-bar";
-import {FETCH_POLICY, POPULAR_FILTER, RELEVANT_FILTER, SORT_FILTERS, THINGS_PER_PAGE} from "./consts";
+import {
+    FETCH_POLICY,
+    INITIAL_ACTIVE_PAGE,
+    POPULAR_FILTER,
+    RELEVANT_FILTER,
+    SORT_FILTERS,
+    THINGS_PER_PAGE
+} from "./consts";
 import {GQL_SEARCH_THINGS} from "../../graphql/queries";
 import Pagination from "../pagination/pagination";
 
@@ -15,7 +22,7 @@ function Home() {
     const [searchQuery, setSearchQuery] = useState<string>();
     const [searchSortIndex, setSearchSort] = useState<number>(SORT_FILTERS.indexOf(POPULAR_FILTER));
     const [isFeatured, setFeatured] = useState<boolean>();
-    const [page, setPage] = useState<number>(1);
+    const [page, setPage] = useState<number>(INITIAL_ACTIVE_PAGE);
 
     const onChangeSearchQuery = (query: string) => {
         console.log("Query new value " + query);
@@ -24,14 +31,18 @@ function Home() {
         setSearchQuery(query);
     };
 
-    const onChangeSort = (sort: number) => {
+    const onChangeSort = (sort: number): void => {
         console.log("Sort New Value " + sort);
         setSearchSort(sort);
     };
 
-    const onChangeFeatured = (isFeatured: boolean) => {
+    const onChangeFeatured = (isFeatured: boolean): void => {
         console.log("isFeatured New Value " + isFeatured);
         isFeatured ? setFeatured(isFeatured) : setFeatured(undefined);
+    };
+
+    const onChangePage = (page: number): void => {
+        setPage(page);
     };
 
     // FIXME [react-apollo issue -> https://github.com/apollographql/react-apollo/issues/3816]: useQuery don't return data when query is cached.
@@ -65,7 +76,7 @@ function Home() {
                     (error) ? <p>Error [{JSON.stringify(error)}]</p> :
                         <section>
                             <ThingCollection things={data?.searchThings || []}/>
-                            <Pagination/>
+                            <Pagination onChangePage={onChangePage} activePage={page}/>
                         </section>
 
             }

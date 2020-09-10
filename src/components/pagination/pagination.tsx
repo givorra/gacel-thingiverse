@@ -1,80 +1,69 @@
-import React, {useState, MouseEvent} from 'react';
+import React from 'react';
 import BSPagination from 'react-bootstrap/Pagination';
+import {PaginationProps} from "./interfaces";
+import {MAX_PAGE, MIDDLE_PAGE_INDEX, MIN_PAGE, VISIBLE_PAGES_NUMBER} from "./consts";
 
-const initialActivePage: number = 1;
-const initialVisiblePages: number[] = [1, 2, 3, 4, 5];
-const middlePageIndex: number = Math.floor(initialVisiblePages.length / 2);
-const minPage: number = 1;
-const maxPage: number = 625;
-
-function Pagination() {
-    const [activePage, setActivePage] = useState<number>(initialActivePage);
-    const [visiblePages, setVisiblePages] = useState<number[]>(initialVisiblePages);
-
+function Pagination(props: PaginationProps) {
     const onPaginationItemClick = (event: React.MouseEvent) => {
-        const nextActivePage: number = +(event.currentTarget?.textContent || activePage);
-        setNextVisiblePages(nextActivePage);
-        setActivePage(nextActivePage);
+        props.onChangePage(+(event.currentTarget?.textContent || props.activePage));
     };
 
     const onPaginationFirstClick = () => {
-        setActivePage(initialActivePage);
-        setVisiblePages(initialVisiblePages);
+        props.onChangePage(MIN_PAGE);
     };
 
     const onPaginationLastClick = () => {
-        let nextVisiblePages: number[] = [];
-        for (let i = maxPage - initialVisiblePages.length + 1; i <= maxPage; i++) {
-            nextVisiblePages.push(i);
-        }
-        setVisiblePages(nextVisiblePages);
-        setActivePage(maxPage);
+        props.onChangePage(MAX_PAGE);
     };
 
     const onPaginationPrevClick = () => {
-        if (activePage > minPage) {
-            const nextActivePage: number = activePage - 1;
-            setNextVisiblePages(nextActivePage);
-            setActivePage(nextActivePage);
-        }
+        if (props.activePage > MIN_PAGE)
+            props.onChangePage(props.activePage - 1);
     };
 
     const onPaginationNextClick = () => {
-        console.log("middlePageIndex " + middlePageIndex);
-        console.log("visiblePages[initialVisiblePages.length] " + visiblePages[initialVisiblePages.length]);
-
-        if (activePage < maxPage) {
-            const nextActivePage: number = activePage + 1;
-            setNextVisiblePages(nextActivePage);
-            setActivePage(nextActivePage);
-        }
+        if (props.activePage < MAX_PAGE)
+            props.onChangePage(props.activePage + 1);
     };
 
-    const setNextVisiblePages = (nextActivePage: number): void => {
-        let nextVisiblePages: number[] = visiblePages;
+    const getNextVisiblePages = (): number[] => {
+        let nextVisiblePages: number[] = [];
+        let firstPage = props.activePage - Math.floor(VISIBLE_PAGES_NUMBER / 2);
 
-        while (nextVisiblePages.indexOf(nextActivePage) < middlePageIndex)
+        for (let i = firstPage; i < firstPage + VISIBLE_PAGES_NUMBER; i++) {
+            nextVisiblePages.push(i);
+        }
+
+        return checkNextVisiblePages(props.activePage, nextVisiblePages);
+    };
+
+    const checkNextVisiblePages = (activePage: number, nextVisiblePages: number[]): number[] => {
+        while (nextVisiblePages.indexOf(activePage) < MIDDLE_PAGE_INDEX)
             nextVisiblePages = nextVisiblePages.map(value => value - 1);
 
-        while (nextVisiblePages.indexOf(nextActivePage) > middlePageIndex)
+        while (nextVisiblePages.indexOf(activePage) > MIDDLE_PAGE_INDEX)
             nextVisiblePages = nextVisiblePages.map(value => value + 1);
 
-        while (nextVisiblePages[0] < minPage)
-            nextVisiblePages = nextVisiblePages.map(value => {return value + 1});
+        while (nextVisiblePages[0] < MIN_PAGE)
+            nextVisiblePages = nextVisiblePages.map(value => value + 1);
 
-        while (nextVisiblePages[initialVisiblePages.length - 1] > maxPage)
+        while (nextVisiblePages[VISIBLE_PAGES_NUMBER - 1] > MAX_PAGE)
             nextVisiblePages = nextVisiblePages.map(value => value - 1);
 
-        setVisiblePages(nextVisiblePages);
+        return nextVisiblePages;
     };
 
     return (
         <BSPagination className="justify-content-center">
-            <BSPagination.First onClick={onPaginationFirstClick} />
+            <BSPagination.First onClick={onPaginationFirstClick}/>
             <BSPagination.Prev onClick={onPaginationPrevClick}/>
             {
-                visiblePages.map((page: number) => {
-                    return (<BSPagination.Item active={page === activePage} key={page} onClick={onPaginationItemClick} value={page}>{page}</BSPagination.Item>)
+                getNextVisiblePages().map((page: number) => {
+                    return (
+                        <BSPagination.Item active={page === props.activePage} key={page} onClick={onPaginationItemClick}
+                                           value={page}>
+                            {page}
+                        </BSPagination.Item>)
                 })
             }
             <BSPagination.Next onClick={onPaginationNextClick}/>
