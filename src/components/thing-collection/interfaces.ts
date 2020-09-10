@@ -17,4 +17,5 @@ export interface PopularThingsVars {
     per_page: number;
     sort: string;
     query?: string;
+    is_featured?: boolean;
 }

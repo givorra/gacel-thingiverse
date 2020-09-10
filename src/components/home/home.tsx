@@ -13,6 +13,7 @@ import {GQL_SEARCH_THINGS} from "../../graphql/queries";
 function Home() {
     const [searchQuery, setSearchQuery] = useState<string>();
     const [searchSortIndex, setSearchSort] = useState<number>(SORT_FILTERS.indexOf(POPULAR_FILTER));
+    const [isFeatured, setFeatured] = useState<boolean>();
     const [page, setPage] = useState<number>(1);
 
     const onChangeSearchQuery = (query: string) => {
@@ -27,6 +28,11 @@ function Home() {
         setSearchSort(sort);
     };
 
+    const onChangeFeatured = (isFeatured: boolean) => {
+        console.log("isFeatured New Value " + isFeatured);
+        isFeatured ? setFeatured(isFeatured) : setFeatured(undefined);
+    };
+
     // FIXME [apollo client bug]: useQuery don't return data when query is cached. Workaround -> fetchPolicy: "no-cache"
     const {loading, error, data} = useQuery<PopularThingsData, PopularThingsVars>(
         GQL_SEARCH_THINGS,
@@ -36,7 +42,8 @@ function Home() {
                     per_page: THINGS_PER_PAGE,
                     page: page,
                     query: searchQuery,
-                    sort: SORT_FILTERS[searchSortIndex].value
+                    sort: SORT_FILTERS[searchSortIndex].value,
+                    is_featured: isFeatured
                 },
             fetchPolicy: FETCH_POLICY
         }
@@ -48,8 +55,8 @@ function Home() {
                 <NavBar onEnterKeyDown={onChangeSearchQuery}/>
             </header>
             <section>
-                <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS}
-                               sortFilterSelectedIndex={searchSortIndex}/>
+                <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS} sortFilterSelectedIndex={searchSortIndex}
+                onChangeFeatured={onChangeFeatured}/>
             </section>
             {
                 (loading) ? <p>Loading things...</p> :

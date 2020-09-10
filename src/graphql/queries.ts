@@ -7,8 +7,8 @@ export const GQL_AUTHENTICATION_REDIRECT_URI = gql`
 `;
 
 export const GQL_SEARCH_THINGS = gql`
-    query search($page: Int!, $per_page: Int!, $sort: String!, $query: String) {
-    searchThings(page: $page, per_page: $per_page, sort: $sort, query: $query) {
+    query search($page: Int!, $per_page: Int!, $sort: String!, $query: String, $is_featured: Boolean) {
+    searchThings(page: $page, per_page: $per_page, sort: $sort, query: $query, is_featured: $is_featured) {
         id
         name
         public_url
