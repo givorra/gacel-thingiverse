@@ -1,6 +1,6 @@
 import * as React from "react";
 import {useState} from "react";
-import {ThingCollection} from "../thing-collection/thing-collection";
+import ThingCollection from "../thing-collection/thing-collection";
 import {useQuery} from "@apollo/client";
 import {PopularThingsData, PopularThingsVars} from "../thing-collection/interfaces";
 import Container from "react-bootstrap/Container";
@@ -65,6 +65,13 @@ function Home() {
         }
     );
 
+    const getPaginationMaxPage = (): number => {
+        if (data?.searchThings.total && data?.searchThings.total > 0)
+            return Math.ceil((data?.searchThings.total || THINGS_PER_PAGE)/ THINGS_PER_PAGE);
+        else
+            return 0;
+    };
+
     return (
         <Container fluid>
             <header>
@@ -79,7 +86,7 @@ function Home() {
                     (error) ? <p>Error [{JSON.stringify(error)}]</p> :
                         <section>
                             <ThingCollection things={data?.searchThings.things || []}/>
-                            <Pagination onChangePage={onChangePage} activePage={page} maxPage={Math.ceil((data?.searchThings.total || THINGS_PER_PAGE)/ THINGS_PER_PAGE) }/>
+                            <Pagination onChangePage={onChangePage} activePage={page} maxPage={getPaginationMaxPage()}/>
                         </section>
 
             }
