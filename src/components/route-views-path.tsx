@@ -5,6 +5,8 @@ import Home from "./home/home";
 import Login from "./login/login";
 import Thing from "./thing/thing";
 import LoginCallback from "./login-callback/login-callback";
+import AuthRoute from "./auth-route/auth-route";
+import {isLoggedIn} from "../common/helpers";
 
 export default class RouteViewPaths extends Component {
     render() {
@@ -12,10 +14,14 @@ export default class RouteViewPaths extends Component {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/oauth_callback" component={LoginCallback}/>
-                    <Route exact path="/login" component={Login}/>
-                    <Route exact path="/thing" component={Thing}/>
-                    <Route exact path="/home" component={Home}/>
-                    <Redirect exact path="/" to="/login"/>
+                    <AuthRoute exact path="/thing" component={Thing}/>
+                    <AuthRoute exact path="/home" component={Home}/>
+                    {isLoggedIn() ?
+                        <Redirect exact path="/login" to="/home"/>
+                        :
+                        <Route exact path="/login" component={Login}/>
+                    }
+                    <Redirect exact path="/" to="/home"/>
                 </Switch>
             </BrowserRouter>
         )
