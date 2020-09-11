@@ -1,3 +1,7 @@
+.thing-container {
+    min-height: 680px;
+}
+
 .card {
     height: 340px;
     width: 300px !important;

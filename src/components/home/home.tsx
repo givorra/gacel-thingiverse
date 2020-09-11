@@ -29,16 +29,19 @@ function Home() {
         console.log("Index of filter " + SORT_FILTERS.indexOf(RELEVANT_FILTER));
         setSearchSort(SORT_FILTERS.indexOf(RELEVANT_FILTER));
         setSearchQuery(query);
+        setPage(INITIAL_ACTIVE_PAGE);
     };
 
     const onChangeSort = (sort: number): void => {
         console.log("Sort New Value " + sort);
         setSearchSort(sort);
+        setPage(INITIAL_ACTIVE_PAGE);
     };
 
     const onChangeFeatured = (isFeatured: boolean): void => {
         console.log("isFeatured New Value " + isFeatured);
         isFeatured ? setFeatured(isFeatured) : setFeatured(undefined);
+        setPage(INITIAL_ACTIVE_PAGE);
     };
 
     const onChangePage = (page: number): void => {
@@ -75,8 +78,8 @@ function Home() {
                 (loading) ? <p>Loading things...</p> :
                     (error) ? <p>Error [{JSON.stringify(error)}]</p> :
                         <section>
-                            <ThingCollection things={data?.searchThings || []}/>
-                            <Pagination onChangePage={onChangePage} activePage={page}/>
+                            <ThingCollection things={data?.searchThings.things || []}/>
+                            <Pagination onChangePage={onChangePage} activePage={page} maxPage={Math.ceil((data?.searchThings.total || THINGS_PER_PAGE)/ THINGS_PER_PAGE) }/>
                         </section>
 
             }

@@ -1,3 +1,8 @@
+export interface SearchThing {
+    total: number;
+    things: Thing[];
+}
+
 export interface Thing {
     id: number;
     name: string;

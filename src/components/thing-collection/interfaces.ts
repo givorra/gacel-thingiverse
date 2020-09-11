@@ -1,4 +1,4 @@
-import {Thing} from "../thing/interfaces";
+import {SearchThing, Thing} from "../thing/interfaces";
 
 export interface ThingCollectionState {
     things: Thing[];
@@ -9,7 +9,7 @@ export interface ThingCollectionProps {
 }
 
 export interface PopularThingsData {
-    searchThings: Thing[];
+    searchThings: SearchThing;
 }
 
 export interface PopularThingsVars {
