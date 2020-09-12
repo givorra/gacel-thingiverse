@@ -2,7 +2,7 @@ import * as React from "react";
 import {Redirect, useLocation} from "react-router";
 import {useQuery} from "@apollo/client";
 import {GQL_GET_ACCESS_TOKEN} from "../../graphql/queries";
-import {ACCESS_TOKEN_VAR} from "../../common/consts";
+import {ACCESS_TOKEN_VAR, ROUTES} from "../../common/consts";
 
 interface GetAccessTokenVars {
     code: string;
@@ -26,7 +26,7 @@ function LoginCallback(): JSX.Element {
     else if (error) return (<p>{JSON.stringify(error)}</p>);
     else {
         if (data && data.getAccessToken) localStorage.setItem(ACCESS_TOKEN_VAR, data.getAccessToken);
-        return (<Redirect to={'/home'}/>)
+        return (<Redirect to={ROUTES.home}/>)
     }
 }
 
