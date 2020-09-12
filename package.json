@@ -17,8 +17,11 @@
     "react-bootstrap": "^1.3.0",
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
+    "@types/react-router": "^5.1.8",
+    "@types/react-router-dom": "^5.1.5",
     "react-scripts": "3.4.3",
-    "typescript": "~3.7.2"
+    "typescript": "~3.7.2",
+    "react-hot-loader": "^4.12.21"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -42,8 +45,5 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router": "^5.1.8",
-    "@types/react-router-dom": "^5.1.5",
-    "react-hot-loader": "^4.12.21"
   }
 }
