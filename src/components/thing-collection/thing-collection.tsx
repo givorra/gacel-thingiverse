@@ -16,7 +16,7 @@ function ThingCollection(props: ThingCollectionProps) {
     };
 
     return (
-        <Row className="bg-light pb-4 thing-container">
+        <Row className="pb-4 thing-container">
             {
                 props.things.length === 0 ?
                     <div className="mx-auto pt-5">
@@ -24,9 +24,9 @@ function ThingCollection(props: ThingCollectionProps) {
                         <p className="text-center">Please try another search or upload your own design.</p>
                     </div> :
                     props.things.map((thing, index) => (
-                        <Col xs={12} md={6} lg={4} xl={3} className="p-2" key={index}>
+                        <Col xs={12} md={6} lg={4} xl={3} className="p-4" key={index}>
                             <a style={{cursor: "pointer"}} onClick={() => onThingClick(thing.id)}>
-                                <Card className="m-2 h-100 mx-auto">
+                                <Card className="m-2 mx-auto">
                                     <Card.Header className="text-truncate">{thing.name}</Card.Header>
                                     <Card.Img className="" variant="top" src={thing.preview_image}/>
                                     <Card.Footer className="text-muted">2 days ago</Card.Footer>

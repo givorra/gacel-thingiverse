@@ -3,6 +3,5 @@
 }
 
 .card {
-    height: 340px;
-    width: 300px !important;
+    max-width: 450px !important;
 }

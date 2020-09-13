@@ -16,7 +16,7 @@ function HomeFilterBar(props: HomeFilterBarProps) {
     };
 
     return (
-        <Row className="bg-light px-2">
+        <Row className="px-2">
             <Col xs={12} md={6} lg={4} xl={3} className="my-2">
                 <FormControl as="select" custom onChange={onSelectChange} value={props.sortFilterSelectedIndex}>
                     {props.sortFilters.map(((sortFilter, index) => {
