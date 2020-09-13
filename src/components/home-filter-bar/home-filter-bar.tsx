@@ -16,8 +16,8 @@ function HomeFilterBar(props: HomeFilterBarProps) {
     };
 
     return (
-        <Row className="bg-light">
-            <Col xs={12} md={6} lg={4} xl={3} className="p-2">
+        <Row className="bg-light px-2">
+            <Col xs={12} md={6} lg={4} xl={3} className="my-2">
                 <FormControl as="select" custom onChange={onSelectChange} value={props.sortFilterSelectedIndex}>
                     {props.sortFilters.map(((sortFilter, index) => {
                         return (<option key={index} value={index}>{sortFilter.text}</option>);
@@ -25,8 +25,8 @@ function HomeFilterBar(props: HomeFilterBarProps) {
                     }
                 </FormControl>
             </Col>
-            <Col xs={12} md={6} lg={4} xl={3} className="p-2">
-                <FormGroup controlId="formBasicCheckbox">
+            <Col xs={12} md={6} lg={4} xl={3} className="my-auto">
+                <FormGroup controlId="formBasicCheckbox" className="my-auto h-100">
                     <FormCheck type="checkbox" label="Featured" onChange={onFeaturedChange}/>
                 </FormGroup>
             </Col>
