@@ -12,7 +12,6 @@ function HomeFilterBar(props: HomeFilterBarProps) {
     };
 
     const onFeaturedChange = (event: React.ChangeEvent<any>): any => {
-        console.log("change = " + event.currentTarget.checked);
         props.onChangeFeatured(event.currentTarget.checked);
     };
 

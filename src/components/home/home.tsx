@@ -25,21 +25,17 @@ function Home() {
     const [page, setPage] = useState<number>(INITIAL_ACTIVE_PAGE);
 
     const onChangeSearchQuery = (query: string) => {
-        console.log("Query new value " + query);
-        console.log("Index of filter " + SORT_FILTERS.indexOf(RELEVANT_FILTER));
         setSearchSort(SORT_FILTERS.indexOf(RELEVANT_FILTER));
         setSearchQuery(query);
         setPage(INITIAL_ACTIVE_PAGE);
     };
 
     const onChangeSort = (sort: number): void => {
-        console.log("Sort New Value " + sort);
         setSearchSort(sort);
         setPage(INITIAL_ACTIVE_PAGE);
     };
 
     const onChangeFeatured = (isFeatured: boolean): void => {
-        console.log("isFeatured New Value " + isFeatured);
         isFeatured ? setFeatured(isFeatured) : setFeatured(undefined);
         setPage(INITIAL_ACTIVE_PAGE);
     };

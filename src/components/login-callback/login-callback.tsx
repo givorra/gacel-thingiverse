@@ -15,7 +15,6 @@ interface GetAccessTokenData {
 function LoginCallback(): JSX.Element {
     const state = new URLSearchParams(useLocation().search);
     const code = state.get("code") ? String(state.get("code")) : '';
-    console.log("Code = " + code);
 
     const {loading, error, data} = useQuery<GetAccessTokenData, GetAccessTokenVars>(
         GQL_GET_ACCESS_TOKEN,

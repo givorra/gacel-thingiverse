@@ -27,7 +27,6 @@ function Pagination(props: PaginationProps) {
     };
 
     const getNextVisiblePages = (): number[] => {
-        console.log("maxPage = " + props.maxPage);
         let nextVisiblePages: number[] = [];
 
         if (props.maxPage < VISIBLE_PAGES_NUMBER) {
