@@ -64,8 +64,8 @@ function Pagination(props: PaginationProps) {
     return (
         props.maxPage > 0 ?
             <BSPagination className="justify-content-center pt-4 pb-4">
-                <BSPagination.First onClick={onPaginationFirstClick}/>
-                <BSPagination.Prev onClick={onPaginationPrevClick}/>
+                <BSPagination.First onClick={onPaginationFirstClick} disabled={props.activePage === MIN_PAGE}/>
+                <BSPagination.Prev onClick={onPaginationPrevClick} disabled={props.activePage === MIN_PAGE}/>
                 {
                     getNextVisiblePages().map((page: number) => {
                         return (
@@ -76,8 +76,8 @@ function Pagination(props: PaginationProps) {
                             </BSPagination.Item>)
                     })
                 }
-                <BSPagination.Next onClick={onPaginationNextClick}/>
-                <BSPagination.Last onClick={onPaginationLastClick}/>
+                <BSPagination.Next onClick={onPaginationNextClick} disabled={props.activePage === props.maxPage}/>
+                <BSPagination.Last onClick={onPaginationLastClick} disabled={props.activePage === props.maxPage}/>
             </BSPagination> :
             null
     )
