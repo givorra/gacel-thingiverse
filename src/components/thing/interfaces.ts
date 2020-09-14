@@ -11,6 +11,8 @@ export interface Thing {
     is_liked: boolean;
     comment_count: number;
     preview_image: string;
+    description_html: string;
+    is_watched: boolean;
 }
 
 export interface GetThingByIdData {
@@ -28,4 +30,13 @@ export interface SetThingLikeVars {
 
 export interface SetThingLikeData {
     setThingLike: boolean;
+}
+
+export interface SetThingWatchVars {
+    thing_id: number;
+    watch: boolean;
+}
+
+export interface SetThingWatchData {
+    setThingWatch: boolean;
 }

@@ -33,6 +33,8 @@ export const GQL_GET_THING_BY_ID = gql`
         is_liked
         comment_count
         preview_image
+        description_html
+        is_watched
     }
   }
 `;
@@ -46,5 +48,12 @@ export const GQL_GET_ACCESS_TOKEN = gql`
 export const GQL_SET_THING_LIKE = gql`
     mutation setThingLike($thing_id: ID!, $like: Boolean!) {
       setThingLike(thing_id: $thing_id, like: $like)
+    }
+`;
+
+
+export const GQL_SET_THING_WATCH = gql`
+    mutation setThingWatch($thing_id: ID!, $watch: Boolean!) {
+      setThingWatch(thing_id: $thing_id, watch: $watch)
     }
 `;
