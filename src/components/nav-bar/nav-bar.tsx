@@ -1,14 +1,13 @@
 import * as React from "react";
+import {useState} from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import "./nav-bar.css"
-
-interface NavBarProps {
-    onEnterKeyDown(query: string): void | undefined
-}
+import {NavBarProps} from "./interfaces";
 
 function NavBar(props: NavBarProps) {
+    const [searchQuery, setSearchQuery] = useState<string>(props.searchQuery);
 
     const onKeyDown = (event: React.KeyboardEvent): void => {
         if (event.key === 'Enter') {
@@ -24,7 +23,7 @@ function NavBar(props: NavBarProps) {
             </Col>
             <Col md={8} className="my-auto">
                 <Form.Control type="search" placeholder="Search Thingiverse" className="search-control text-white"
-                              onKeyDown={onKeyDown}/>
+                              onKeyDown={onKeyDown} value={searchQuery} onChange={e => setSearchQuery(e.currentTarget.value)}/>
             </Col>
         </Row>
     )

@@ -16,10 +16,13 @@ import {
 } from "./consts";
 import {GQL_SEARCH_THINGS} from "../../graphql/queries";
 import Pagination from "../pagination/pagination";
+import {HomeLocationState} from "./interfaces";
+import {useLocation} from "react-router";
 
 
 function Home() {
-    const [searchQuery, setSearchQuery] = useState<string>();
+    const location = useLocation<HomeLocationState>();
+    const [searchQuery, setSearchQuery] = useState<string>(location.state?.searchQuery);
     const [searchSortIndex, setSearchSort] = useState<number>(SORT_FILTERS.indexOf(POPULAR_FILTER));
     const [isFeatured, setFeatured] = useState<boolean>();
     const [page, setPage] = useState<number>(INITIAL_ACTIVE_PAGE);
@@ -71,7 +74,7 @@ function Home() {
     return (
         <Container fluid>
             <header>
-                <NavBar onEnterKeyDown={onChangeSearchQuery}/>
+                <NavBar onEnterKeyDown={onChangeSearchQuery} searchQuery={searchQuery}/>
             </header>
             <section>
                 <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS} sortFilterSelectedIndex={searchSortIndex}
