@@ -18,6 +18,8 @@ import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import NavBar from "../nav-bar/nav-bar";
 import {ROUTES} from "../../common/consts";
+import "./thing.css";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
 
 function Thing(props: RouteComponentProps<{ id: string; }>) {
     const [liked, setLiked] = useState<boolean>();
@@ -96,15 +98,13 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
         }
     );
 
-    if (GetThingById.loading) return (<p>Loading...</p>);
-    if (GetThingById.error) return (<p>Error!!!</p>);
-    if (GetThingById.data) {
-        if (!GetThingById.data.getThingById) return (<p>Thing not found...</p>);
-
-        const thing: IThing = GetThingById.data.getThingById;
-        return (
-            <div>
-                <NavBar onEnterKeyDown={onNavBarEnterKeyDown} searchQuery=""/>
+    const renderThing = () => {
+        if (GetThingById.loading) return (<LoadingSpinner/>);
+        if (GetThingById.error) return (<div>Error!!!</div>);
+        if (GetThingById.data) {
+            if (!GetThingById.data.getThingById) return (<div>Thing not found...</div>);
+            const thing: IThing = GetThingById.data.getThingById;
+            return (
                 <Container className="p-xs-2 p-lg-3">
                     <Row className="py-3">
                         <Col xs={12}>
@@ -142,14 +142,28 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                         </Col>
                     </Row>
                     <Row>
-                        <Col xs={12} id="thing-content">
+                        <Col xs={12} id="thing-content" className="bg-white py-2 thing-description">
+                            <h2>Summary</h2>
                             <div dangerouslySetInnerHTML={{__html: thing.description_html}}/>
                         </Col>
                     </Row>
                 </Container>
+            );
+        }
+        return null;
+    };
+
+        return (
+            <div>
+                <Container fluid>
+                    <NavBar onEnterKeyDown={onNavBarEnterKeyDown} searchQuery=""/>
+                </Container>
+                {
+                    renderThing()
+                }
             </div>
         );
-    }
+
 }
 
 export default Thing;

@@ -18,6 +18,7 @@ import {GQL_SEARCH_THINGS} from "../../graphql/queries";
 import Pagination from "../pagination/pagination";
 import {HomeLocationState} from "./interfaces";
 import {useLocation} from "react-router";
+import LoadingSpinner from "../loading-spinner/loading-spinner";
 
 
 function Home() {
@@ -81,7 +82,7 @@ function Home() {
                 onChangeFeatured={onChangeFeatured}/>
             </section>
             {
-                (loading) ? <p>Loading things...</p> :
+                (loading) ? <LoadingSpinner/> :
                     (error) ? <p>Error [{JSON.stringify(error)}]</p> :
                         <section>
                             <ThingCollection things={data?.searchThings.things || []}/>
