@@ -29,7 +29,7 @@ function ThingCollection(props: ThingCollectionProps) {
                                 <Card className="m-2 mx-auto">
                                     <Card.Header className="text-truncate">{thing.name}</Card.Header>
                                     <Card.Img className="" variant="top" src={thing.preview_image}/>
-                                    <Card.Footer className="text-muted">2 days ago</Card.Footer>
+                                    {/*<Card.Footer className="text-muted">2 days ago</Card.Footer>*/}
                                 </Card>
                             </a>
                         </Col>

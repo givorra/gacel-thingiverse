@@ -42,3 +42,9 @@ export const GQL_GET_ACCESS_TOKEN = gql`
         getAccessToken(code: $code)
     }
 `;
+
+export const GQL_SET_THING_LIKE = gql`
+    mutation setThingLike($thing_id: ID!, $like: Boolean!) {
+      setThingLike(thing_id: $thing_id, like: $like)
+    }
+`;

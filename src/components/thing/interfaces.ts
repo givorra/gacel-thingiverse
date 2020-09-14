@@ -21,3 +21,11 @@ export interface GetThingByIdVars {
     id: number;
 }
 
+export interface SetThingLikeVars {
+    thing_id: number;
+    like: boolean;
+}
+
+export interface SetThingLikeData {
+    setThingLike: boolean;
+}
