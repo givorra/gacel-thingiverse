@@ -4,7 +4,7 @@ import {isLoggedIn} from "../../common/helpers";
 
 function AuthRoute(props: any) {
     if (!isLoggedIn()) {
-        return <Redirect to="/login" />;
+        return <Redirect to="/login"/>;
     }
     return <Route {...props} />;
 }

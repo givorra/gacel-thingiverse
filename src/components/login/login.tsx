@@ -28,7 +28,8 @@ function Login(): JSX.Element {
                 </Row>
                 <Row>
                     <div className="mx-auto pt-2">
-                        <a href={data?.authenticationRedirectUrl}><Button className="text-center">Login with Thingiverse</Button></a>
+                        <a href={data?.authenticationRedirectUrl}><Button className="text-center">Login with
+                            Thingiverse</Button></a>
                     </div>
                 </Row>
             </Container>

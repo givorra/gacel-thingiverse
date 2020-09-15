@@ -79,8 +79,9 @@ function Home() {
                 <NavBar onEnterKeyDown={onChangeSearchQuery} searchQuery={searchQuery}/>
             </header>
             <section>
-                <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS} sortFilterSelectedIndex={searchSortIndex}
-                onChangeFeatured={onChangeFeatured}/>
+                <HomeFilterBar onChangeSort={onChangeSort} sortFilters={SORT_FILTERS}
+                               sortFilterSelectedIndex={searchSortIndex}
+                               onChangeFeatured={onChangeFeatured}/>
             </section>
             {
                 (loading) ? <LoadingSpinner/> :

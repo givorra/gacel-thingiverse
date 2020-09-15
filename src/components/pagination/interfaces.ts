@@ -1,4 +1,3 @@
-
 export interface PaginationProps {
     onChangePage(page: number): void;
 

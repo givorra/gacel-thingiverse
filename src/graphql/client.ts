@@ -2,7 +2,7 @@ import {ApolloClient, createHttpLink, InMemoryCache} from "@apollo/client";
 import {ACCESS_TOKEN_VAR} from "../common/consts";
 import {setContext} from "@apollo/client/link/context";
 
-const authLink = setContext((_, { headers }) => {
+const authLink = setContext((_, {headers}) => {
     const token = localStorage.getItem(ACCESS_TOKEN_VAR);
     return {
         headers: {

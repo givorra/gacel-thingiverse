@@ -102,7 +102,7 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                 watch: !GetThingById.data?.getThingById.is_watched || false
             },
             onCompleted: response => {
-                if (response){
+                if (response) {
                     GetThingById.refetch();
                 }
             }
@@ -112,8 +112,7 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
     const renderThing = () => {
         if (GetThingById.loading) {
             return (<LoadingSpinner/>);
-        }
-        else if (GetThingById.error) {
+        } else if (GetThingById.error) {
             return (<div>Error!!!</div>);
         } else if (GetThingById.data) {
             if (!GetThingById.data.getThingById) {
@@ -169,16 +168,16 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
         }
     };
 
-        return (
-            <div>
-                <Container fluid>
-                    <NavBar onEnterKeyDown={onNavBarEnterKeyDown} searchQuery=""/>
-                </Container>
-                {
-                    renderThing()
-                }
-            </div>
-        );
+    return (
+        <div>
+            <Container fluid>
+                <NavBar onEnterKeyDown={onNavBarEnterKeyDown} searchQuery=""/>
+            </Container>
+            {
+                renderThing()
+            }
+        </div>
+    );
 
 }
 
