@@ -20,12 +20,12 @@ function NavBar(props: NavBarProps) {
 
     return (
         <Row className="nav-bar justify-content-start px-2 px-lg-3">
-            <Col md={4} className="my-auto text-center d-none d-md-block nav-bar-title" style={{cursor: "pointer"}}
+            <Col xs={12} md={4} className="pb-2 pb-md-0 my-md-auto text-center nav-bar-title" style={{cursor: "pointer"}}
                  onClick={() => history.push(ROUTES.home)}>
                 <span className="h-100 font-weight-light">Gacel's</span> <span
                 className="font-weight-bold">Thingiverse!</span>
             </Col>
-            <Col md={8} className="my-auto">
+            <Col xs={12} md={8} className="my-auto">
                 <Form.Control type="search" placeholder="Search Thingiverse" className="search-control text-white"
                               onKeyDown={onKeyDown} value={searchQuery}
                               onChange={e => setSearchQuery(e.currentTarget.value)}/>

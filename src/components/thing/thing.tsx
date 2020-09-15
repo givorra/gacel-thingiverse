@@ -18,7 +18,6 @@ import Image from "react-bootstrap/Image";
 import ListGroup from "react-bootstrap/ListGroup";
 import NavBar from "../nav-bar/nav-bar";
 import {ROUTES} from "../../common/consts";
-import "./thing.css";
 import LoadingSpinner from "../loading-spinner/loading-spinner";
 
 function Thing(props: RouteComponentProps<{ id: string; }>) {
@@ -121,12 +120,12 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                 const thing: IThing = GetThingById.data.getThingById;
                 return (
                     <Container className="p-xs-2 p-lg-3">
-                        <Row className="py-3">
+                        <Row className="pt-4">
                             <Col xs={12}>
                                 <h1>{thing.name}</h1>
                             </Col>
                         </Row>
-                        <Row className="py-4">
+                        <Row className="pt-2 pb-4">
                             <Col xs={12} md={8} className="py-2">
                                 <Image src={thing.preview_image} fluid/>
                             </Col>
@@ -154,10 +153,12 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                                 </ListGroup>
                             </Col>
                         </Row>
-                        <Row>
-                            <Col xs={12} id="thing-content" className="bg-white py-2 thing-description">
+                        <Row className="thing-description">
+                            <Col xs={12} className="">
+                                <div className="bg-white p-2">
                                 <h2>Summary</h2>
                                 <div dangerouslySetInnerHTML={{__html: thing.description_html}}/>
+                                </div>
                             </Col>
                         </Row>
                     </Container>
