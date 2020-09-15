@@ -23,6 +23,7 @@ export default class RouteViewPaths extends Component {
                         <Route exact path={ROUTES.login} component={Login}/>
                     }
                     <Redirect exact path="/" to={ROUTES.home}/>
+                    <Redirect from="*" to="/"/>
                 </Switch>
             </BrowserRouter>
         )
