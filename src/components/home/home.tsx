@@ -66,10 +66,11 @@ function Home() {
     );
 
     const getPaginationMaxPage = (): number => {
-        if (data?.searchThings.total && data?.searchThings.total > 0)
-            return Math.ceil((data?.searchThings.total || THINGS_PER_PAGE)/ THINGS_PER_PAGE);
-        else
+        if (data?.searchThings.total && data?.searchThings.total > 0) {
+            return Math.ceil((data?.searchThings.total || THINGS_PER_PAGE) / THINGS_PER_PAGE);
+        } else {
             return 0;
+        }
     };
 
     return (

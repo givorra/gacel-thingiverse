@@ -26,16 +26,7 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
     const [watched, setWatched] = useState<boolean>();
     const history = useHistory();
 
-    const GetThingById = useQuery<GetThingByIdData, GetThingByIdVars>(
-        GQL_GET_THING_BY_ID,
-        {
-            variables: {id: +props.match.params.id},
-            onCompleted: response => {
-                setLiked(response?.getThingById.is_liked);
-                setWatched(response?.getThingById.is_watched);
-            }
-        },
-    );
+    // ***************** HANDLERS *******************
 
     const onLikeClick = (): void => {
         if (GetThingById.data) {
@@ -61,6 +52,11 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
         }
     };
 
+    const onCopyLinkClick = () => {
+        navigator.clipboard.writeText(window.location.href)
+            .catch(error => console.error(error));
+    };
+
     const onNavBarEnterKeyDown = (query: string): void => {
         history.push({
             pathname: ROUTES.home,
@@ -70,6 +66,19 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
         })
     };
 
+    // ******************** APOLLO HOOKS ******************
+
+    const GetThingById = useQuery<GetThingByIdData, GetThingByIdVars>(
+        GQL_GET_THING_BY_ID,
+        {
+            variables: {id: +props.match.params.id},
+            onCompleted: response => {
+                setLiked(response?.getThingById.is_liked);
+                setWatched(response?.getThingById.is_watched);
+            }
+        },
+    );
+
     const [setThingLikeMutation] = useMutation<SetThingLikeData, SetThingLikeVars>(
         GQL_SET_THING_LIKE,
         {
@@ -78,8 +87,9 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                 like: !GetThingById.data?.getThingById.is_liked || false
             },
             onCompleted: response => {
-                if (response)
+                if (response) {
                     GetThingById.refetch();
+                }
             }
         }
     );
@@ -92,65 +102,71 @@ function Thing(props: RouteComponentProps<{ id: string; }>) {
                 watch: !GetThingById.data?.getThingById.is_watched || false
             },
             onCompleted: response => {
-                if (response)
+                if (response){
                     GetThingById.refetch();
+                }
             }
         }
     );
 
     const renderThing = () => {
-        if (GetThingById.loading) return (<LoadingSpinner/>);
-        if (GetThingById.error) return (<div>Error!!!</div>);
-        if (GetThingById.data) {
-            if (!GetThingById.data.getThingById) return (<div>Thing not found...</div>);
-            const thing: IThing = GetThingById.data.getThingById;
-            return (
-                <Container className="p-xs-2 p-lg-3">
-                    <Row className="py-3">
-                        <Col xs={12}>
-                            <h1>{thing.name}</h1>
-                        </Col>
-                    </Row>
-                    <Row className="py-4">
-                        <Col xs={12} md={8} className="py-2">
-                            <Image src={thing.preview_image} fluid/>
-                        </Col>
-                        <Col xs={12} md={4} className="py-2">
-                            <ListGroup>
-                                <ListGroup.Item onClick={onLikeClick} style={{cursor: "pointer"}}>
-                                    <img src={liked ?
-                                        "https://cdn.thingiverse.com/site/assets/like-button-liked.svg" :
-                                        "https://cdn.thingiverse.com/site/assets/like-button-unliked.svg"}
-                                         alt="Like side item"/>
-                                    <span className="pl-2">Like</span>
-                                </ListGroup.Item>
-                                <ListGroup.Item onClick={onWatchClick} style={{cursor: "pointer"}}>
-                                    <img src={watched ?
-                                        "https://cdn.thingiverse.com/site/assets/watch-button-watched.svg" :
-                                        "https://cdn.thingiverse.com/site/assets/watch-button-unwatched.svg"}
-                                         alt="Watch side item"/>
-                                    <span className="pl-2">Watch</span>
-                                </ListGroup.Item>
-                                <ListGroup.Item onClick={() => {
-                                    navigator.clipboard.writeText(window.location.href)
-                                }} style={{cursor: "pointer"}}>
-                                    <img src={"https://cdn.thingiverse.com/site/assets/copy-link.svg"}
-                                         alt="Copy clipboard side item"/>
-                                    <span className="pl-2">Copy Link</span>
-                                </ListGroup.Item>
-                            </ListGroup>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col xs={12} id="thing-content" className="bg-white py-2 thing-description">
-                            <h2>Summary</h2>
-                            <div dangerouslySetInnerHTML={{__html: thing.description_html}}/>
-                        </Col>
-                    </Row>
-                </Container>
-            );
+        if (GetThingById.loading) {
+            return (<LoadingSpinner/>);
         }
-        return null;
+        else if (GetThingById.error) {
+            return (<div>Error!!!</div>);
+        } else if (GetThingById.data) {
+            if (!GetThingById.data.getThingById) {
+                return (<div>Thing not found...</div>);
+            } else {
+                const thing: IThing = GetThingById.data.getThingById;
+                return (
+                    <Container className="p-xs-2 p-lg-3">
+                        <Row className="py-3">
+                            <Col xs={12}>
+                                <h1>{thing.name}</h1>
+                            </Col>
+                        </Row>
+                        <Row className="py-4">
+                            <Col xs={12} md={8} className="py-2">
+                                <Image src={thing.preview_image} fluid/>
+                            </Col>
+                            <Col xs={12} md={4} className="py-2">
+                                <ListGroup>
+                                    <ListGroup.Item onClick={onLikeClick} style={{cursor: "pointer"}}>
+                                        <img src={liked ?
+                                            "https://cdn.thingiverse.com/site/assets/like-button-liked.svg" :
+                                            "https://cdn.thingiverse.com/site/assets/like-button-unliked.svg"}
+                                             alt="Like side item"/>
+                                        <span className="pl-2">Like</span>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item onClick={onWatchClick} style={{cursor: "pointer"}}>
+                                        <img src={watched ?
+                                            "https://cdn.thingiverse.com/site/assets/watch-button-watched.svg" :
+                                            "https://cdn.thingiverse.com/site/assets/watch-button-unwatched.svg"}
+                                             alt="Watch side item"/>
+                                        <span className="pl-2">Watch</span>
+                                    </ListGroup.Item>
+                                    <ListGroup.Item onClick={onCopyLinkClick} style={{cursor: "pointer"}}>
+                                        <img src={"https://cdn.thingiverse.com/site/assets/copy-link.svg"}
+                                             alt="Copy clipboard side item"/>
+                                        <span className="pl-2">Copy Link</span>
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col xs={12} id="thing-content" className="bg-white py-2 thing-description">
+                                <h2>Summary</h2>
+                                <div dangerouslySetInnerHTML={{__html: thing.description_html}}/>
+                            </Col>
+                        </Row>
+                    </Container>
+                );
+            }
+        } else {
+            return null;
+        }
     };
 
         return (

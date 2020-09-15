@@ -17,13 +17,15 @@ function Pagination(props: PaginationProps) {
     };
 
     const onPaginationPrevClick = () => {
-        if (props.activePage > MIN_PAGE)
+        if (props.activePage > MIN_PAGE) {
             props.onChangePage(props.activePage - 1);
+        }
     };
 
     const onPaginationNextClick = () => {
-        if (props.activePage < props.maxPage)
+        if (props.activePage < props.maxPage) {
             props.onChangePage(props.activePage + 1);
+        }
     };
 
     const getNextVisiblePages = (): number[] => {
